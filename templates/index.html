@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Translator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f1e;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            background: #f5f1e8;
+            color: #2c2c2c;
+        }
+
+        body.light-mode .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .header h1 {
+            color: #2c2c2c;
+        }
+
+        body.light-mode .nav-links a {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .nav-links a:hover,
+        body.light-mode .nav-links a.active {
+            color: #070115;
+        }
+
+        body.light-mode .theme-toggle {
+            background: #e0d8c8;
+        }
+
+        body.light-mode .theme-toggle:hover {
+            background: #d0c8b8;
+        }
+
+        body.light-mode .translator-box {
+            background: #ffffff;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .input-section {
+            border-right: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .section-title {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .camera-placeholder {
+            color: #9b9b9b;
+        }
+
+        body.light-mode .btn-secondary {
+            background: #e0d8c8;
+            color: #2c2c2c;
+        }
+
+        body.light-mode .btn-secondary:hover:not(:disabled) {
+            background: #d0c8b8;
+        }
+
+        body.light-mode .prediction-display {
+            background: #f5f1e8;
+        }
+
+        body.light-mode .confidence-bar {
+            background: #e0d8c8;
+        }
+
+        body.light-mode .confidence-text {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .output-text {
+            background: #faf8f3;
+            border: 1px solid #e0d8c8;
+            color: #2c2c2c;
+        }
+
+        body.light-mode .output-placeholder {
+            color: #9b9b9b;
+        }
+
+        body.light-mode .action-btn {
+            background: #f5f1e8;
+            border: 1px solid #e0d8c8;
+            color: #2c2c2c;
+        }
+
+        body.light-mode .action-btn:hover {
+            background: #e0d8c8;
+            border-color: #070115;;
+        }
+
+        body.light-mode .about-container {
+            background: #ffffff;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .about-container h2 {
+            color: #070115;;
+        }
+
+        body.light-mode .about-container h3 {
+            color: #2c2c2c;
+        }
+
+        body.light-mode .about-container p,
+        body.light-mode .about-container ul li {
+            color: #4a4a4a;
+        }
+
+        body.light-mode .footer {
+            background: #ffffff;
+            border-top: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .footer-section h4 {
+            color: #070115;;
+        }
+
+        body.light-mode .footer-section p,
+        body.light-mode .footer-links a {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .footer-links a:hover {
+            color: #070115;;
+        }
+
+        body.light-mode .footer-bottom {
+            border-top: 1px solid #e0d8c8;
+            color: #9b9b9b;
+        }
+
+        .header {
+            background: #1a1a2e;
+            padding: 20px 40px;
+            border-bottom: 1px solid #2a2a3e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .header h1:hover {
+            color: #070115;;
+        }
+
+        .header span {
+            color: #070115;;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .theme-toggle {
+            background: #2a2a3e;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: #3a3a4e;
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #8b8b9e;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #070115;;
+        }
+
+        .main-container {
+            flex: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .translator-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            background: #1a1a2e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-section, .output-section {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-section {
+            border-right: 1px solid #2a2a3e;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8b8b9e;
+            margin-bottom: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        #video, #canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .camera-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #5a5a6e;
+        }
+
+        .camera-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: capitalize;
+        }
+
+        .btn-primary {
+            background: #070115;;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #070115;;
+        }
+
+        .btn-secondary {
+            background: #2a2a3e;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #3a3a4e;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .prediction-display {
+            padding: 20px;
+            background: #2a2a3e;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .current-sign {
+            font-size: 48px;
+            font-weight: bold;
+            color: #070115;;
+            margin-bottom: 10px;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 4px;
+            background: #3a3a4e;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #070115, #ec4899);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .confidence-text {
+            font-size: 12px;
+            color: #8b8b9e;
+            margin-top: 8px;
+        }
+
+        .output-text {
+            flex: 1;
+            padding: 20px;
+            background: #0f0f1e;
+            border: 1px solid #2a2a3e;
+            border-radius: 8px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #ffffff;
+            min-height: 300px;
+            margin-bottom: 20px;
+            overflow-y: auto;
+        }
+
+        .output-placeholder {
+            color: #5a5a6e;
+            font-style: italic;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 12px;
+            background: #2a2a3e;
+            border: 1px solid #3a3a4e;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .action-btn:hover {
+            background: #3a3a4e;
+            border-color: #070115;
+        }
+
+        .action-btn.primary {
+            background: #070115;
+            border-color: #070115;
+        }
+
+        .action-btn.primary:hover {
+            background: #070115;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-active {
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        .status-inactive {
+            background: #050a13;
+        }
+
+        /* About Us Page Styles */
+        .about-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .about-container h2 {
+            font-size: 36px;
+            color:#e2e1e6;
+            margin-bottom: 30px;
+        }
+
+        .about-container h3 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .about-container p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #b8b8c8;
+            margin-bottom: 20px;
+        }
+
+        .about-container ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .about-container ul li {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #b8b8c8;
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .about-container ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #efeef2;
+            font-weight: bold;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #010113;
+            border-top: 1px solid #010111;
+            padding: 30px 40px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-section h4 {
+            color: #070115;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p {
+            color: #8b8b9e;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #8b8b9e;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #070115;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 20px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid #2a2a3e;
+            text-align: center;
+            color: #5a5a6e;
+            font-size: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            .translator-box {
+                grid-template-columns: 1fr;
+            }
+
+            .input-section {
+                border-right: none;
+                border-bottom: 1px solid #2a2a3e;
+            }
+
+            body.light-mode .input-section {
+                border-bottom: 1px solid #e0d8c8;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header-right {
+                gap: 15px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 onclick="showPage('translator')"> Sign Language <span>Translator</span></h1>
+        <div class="header-right">
+            <nav class="nav-links">
+                <a href="#" class="active" onclick="showPage('translator')">Translator</a>
+                <a href="#" onclick="showPage('about')">About Us</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Translator Page -->
+        <div id="translatorPage" class="page active">
+            <div class="translator-box">
+                <!-- Input Section (Camera) -->
+                <div class="input-section">
+                    <div class="section-title">
+                        <span class="status-dot" id="statusDot"></span>
+                        Camera Input
+                    </div>
+
+                    <div class="video-container">
+                        <video id="video" autoplay playsinline style="display: none;"></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        <div class="camera-placeholder" id="placeholder">
+                            <div class="camera-icon">📹</div>
+                            <div>Click "Start Camera" to begin</div>
+                        </div>
+                    </div>
+
+                    <div class="prediction-display">
+                        <div class="current-sign" id="currentSign">-</div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                        <div class="confidence-text" id="confidenceText">Ready to detect signs</div>
+                    </div>
+
+                    <div class="controls">
+                        <button id="startBtn" class="btn-primary">Start Camera</button>
+                        <button id="stopBtn" class="btn-secondary" disabled>Stop Camera</button>
+                    </div>
+                </div>
+
+                <!-- Output Section (Translation) -->
+                <div class="output-section">
+                    <div class="section-title">Translated Sentence</div>
+
+                    <div class="output-text" id="outputText">
+                        <span class="output-placeholder">Your translated sentence will appear here...</span>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn primary" id="addBtn" disabled>
+                            ➕ Add Sign
+                        </button>
+                        <button class="action-btn" onclick="deleteLastWord()">
+                            ⬅️ Delete
+                        </button>
+                        <button class="action-btn" onclick="clearSentence()">
+                            🗑️ Clear
+                        </button>
+                        <button class="action-btn" onclick="speakSentence()">
+                            🔊 Speak
+                        </button>
+                        <button class="action-btn" onclick="copySentence()">
+                            📋 Copy
+                        </button>
+                        <button class="action-btn" onclick="saveSentence()">
+                            💾 Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Us Page -->
+        <div id="aboutPage" class="page">
+            <div class="about-container">
+                <h2>About Sign Language Translator</h2>
+                
+                <p>Our Sign Language Translator is an AI application designed to bridge communication gaps between sign language users and the hearing community. Using advanced machine learning and computer vision technology, we make communication more accessible and inclusive.</p>
+
+                <h3>What We Do</h3>
+                <p>We provide real-time sign language recognition and translation, enabling seamless communication through:</p>
+                <ul>
+                    <li>Real-time hand gesture recognition using AI</li>
+                    <li>Accurate translation of ASL signs to text</li>
+                    <li>Text-to-speech conversion for spoken output</li>
+                    <li>Simple, intuitive interface for all users</li>
+                </ul>
+
+                <h3>Our Mission</h3>
+                <p>To break down communication barriers and create a more inclusive world where everyone can express themselves freely, regardless of their preferred mode of communication.</p>
+
+                
+
+                <h3>Get Involved</h3>
+                <p>We believe in continuous improvement and community involvement. If you have feedback, suggestions, or would like to contribute to making this tool better, we'd love to hear from you.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Sign Language Translator</h4>
+                <p>Breaking communication barriers through AI sign language recognition. Making the world more accessible, one sign at a time.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showPage('translator')">Translator</a></li>
+                    <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:padmaniruhi@gmail.com">support@signlanguage.com</a></li>
+                    <li><a href="#">GitHub</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 Sign Language Translator. All rights reserved. Built with ❤️ for accessibility.
+        </div>
+    </footer>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const placeholder = document.getElementById('placeholder');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const addBtn = document.getElementById('addBtn');
+        const statusDot = document.getElementById('statusDot');
+        const themeToggle = document.getElementById('themeToggle');
+
+        let stream = null;
+        let isDetecting = false;
+        let sentence = [];
+        let currentPrediction = null;
+
+        statusDot.classList.add('status-inactive');
+
+        // Theme Management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.textContent = '☀️';
+            } else {
+                themeToggle.textContent = '🌙';
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeToggle.textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Initialize theme on page load
+        initTheme();
+
+        // Page navigation
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            if (pageName === 'translator') {
+                document.getElementById('translatorPage').classList.add('active');
+                document.querySelector('.nav-links a:first-child').classList.add('active');
+            } else if (pageName === 'about') {
+                document.getElementById('aboutPage').classList.add('active');
+                document.querySelector('.nav-links a:last-child').classList.add('active');
+            }
+        }
+
+        // Start camera
+        startBtn.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'user' } 
+                });
+                video.srcObject = stream;
+                
+                video.onloadedmetadata = () => {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    placeholder.style.display = 'none';
+                    video.style.display = 'block';
+                    canvas.style.display = 'block';
+                };
+
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                addBtn.disabled = false;
+                statusDot.classList.remove('status-inactive');
+                statusDot.classList.add('status-active');
+                
+                isDetecting = true;
+                detectSign();
+            } catch (err) {
+                alert('Camera access denied. Please allow camera permissions.\n\nFor Brave browser:\n1. Click shield icon in address bar\n2. Allow camera access\n3. Refresh page');
+            }
+        });
+
+        // Stop camera
+        stopBtn.addEventListener('click', () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+                isDetecting = false;
+                
+                placeholder.style.display = 'flex';
+                video.style.display = 'none';
+                canvas.style.display = 'none';
+                
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                addBtn.disabled = true;
+                statusDot.classList.remove('status-active');
+                statusDot.classList.add('status-inactive');
+                
+                document.getElementById('currentSign').textContent = '-';
+                document.getElementById('confidenceText').textContent = 'Camera stopped';
+                document.getElementById('confidenceFill').style.width = '0%';
+            }
+        });
+
+        // Continuous detection
+        async function detectSign() {
+            if (!isDetecting) return;
+
+            try {
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = canvas.toDataURL('image/jpeg');
+
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: imageData })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentPrediction = result.prediction;
+                    document.getElementById('currentSign').textContent = result.prediction;
+                    document.getElementById('confidenceText').textContent = 
+                        `Confidence: ${result.confidence}%`;
+                    document.getElementById('confidenceFill').style.width = result.confidence + '%';
+                } else {
+                    currentPrediction = null;
+                    document.getElementById('currentSign').textContent = '👋';
+                    document.getElementById('confidenceText').textContent = 'Show your hand';
+                    document.getElementById('confidenceFill').style.width = '0%';
+                }
+            } catch (err) {
+                console.error('Detection error:', err);
+            }
+
+            setTimeout(detectSign, 100);
+        }
+
+        // Add to sentence
+        addBtn.addEventListener('click', () => {
+            if (currentPrediction) {
+                sentence.push(currentPrediction);
+                updateSentenceDisplay();
+            }
+        });
+
+        function updateSentenceDisplay() {
+            const outputText = document.getElementById('outputText');
+            if (sentence.length === 0) {
+                outputText.innerHTML = '<span class="output-placeholder">Your translated sentence will appear here...</span>';
+            } else {
+                outputText.textContent = sentence.join(' ');
+            }
+        }
+
+        function deleteLastWord() {
+            if (sentence.length > 0) {
+                sentence.pop();
+                updateSentenceDisplay();
+            }
+        }
+
+        function clearSentence() {
+            sentence = [];
+            updateSentenceDisplay();
+        }
+
+        function speakSentence() {
+            if (sentence.length > 0 && 'speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(sentence.join(' '));
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function copySentence() {
+            if (sentence.length > 0) {
+                navigator.clipboard.writeText(sentence.join(' '));
+                alert('Sentence copied to clipboard!');
+            }
+        }
+
+        function saveSentence() {
+            if (sentence.length > 0) {
+                const text = sentence.join(' ');
+                const blob = new Blob([text], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'sentence_' + new Date().getTime() + '.txt';
+                a.click();
+            }
+        }
+    </script>
+</body>
+</html>
