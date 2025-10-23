@@ -4,8 +4,9 @@ opencv-python-headless==4.11.0.86
 
 mediapipe==0.10.21
 scikit-learn==1.7.2
-protobuf==5.28.3
+protobuf==4.25.3
 gunicorn==21.2.0
+
 
 
 
