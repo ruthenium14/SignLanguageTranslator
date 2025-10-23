@@ -2,6 +2,13 @@ Flask==3.1.1
 numpy==1.26.4
 opencv-python==4.11.0.86
 mediapipe==0.9.1
-scikit-learn==1.7.2
+scikit-learn==1.5.2
 protobuf==3.20.3
 gunicorn==21.2.0
+```
+
+**Key change:** `scikit-learn==1.5.2` (instead of 1.7.2) works with Python 3.11
+
+Then add a `.python-version` file to lock Python 3.11:
+```
+3.11.9
