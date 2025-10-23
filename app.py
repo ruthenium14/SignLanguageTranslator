@@ -2,41 +2,20 @@ from flask import Flask, render_template, Response, jsonify, request
 import cv2
 import pickle
 import numpy as np
-import mediapipe as mp
 import base64
 import warnings
+import gc
 
 warnings.filterwarnings('ignore')
 
-# Safe protobuf handling
-try:
-    import google.protobuf
-    if hasattr(google.protobuf, 'internal'):
-        try:
-            import google.protobuf.internal.builder as builder
-            if hasattr(builder, 'GetPrototype'):
-                builder.GetPrototype = lambda descriptor: None
-        except (AttributeError, ImportError):
-            pass
-except ImportError:
-    pass
-
 app = Flask(__name__)
 
-# Load model
-model_dict = pickle.load(open('./model.p', 'rb'))
-model = model_dict['model']
-
-# MediaPipe setup
-mp_hands = mp.solutions.hands
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
-
-hands = mp_hands.Hands(
-    static_image_mode=True,
-    max_num_hands=1,
-    min_detection_confidence=0.5
-)
+# Lazy loading - don't load at startup
+_model = None
+_hands = None
+_mp_hands = None
+_mp_drawing = None
+_mp_drawing_styles = None
 
 # Labels
 labels_dict = {
@@ -48,6 +27,35 @@ labels_dict = {
     25: 'U', 26: 'V', 27: 'W', 28: 'X', 29: 'Y'
 }
 
+def get_model():
+    """Lazy load model only when needed"""
+    global _model
+    if _model is None:
+        model_dict = pickle.load(open('./model.p', 'rb'))
+        _model = model_dict['model']
+    return _model
+
+def get_mediapipe():
+    """Lazy load mediapipe only when needed"""
+    global _hands, _mp_hands, _mp_drawing, _mp_drawing_styles
+    
+    if _hands is None:
+        import mediapipe as mp
+        _mp_hands = mp.solutions.hands
+        _mp_drawing = mp.solutions.drawing_utils
+        _mp_drawing_styles = mp.solutions.drawing_styles
+        
+        # Use minimal configuration to save memory
+        _hands = _mp_hands.Hands(
+            static_image_mode=True,
+            max_num_hands=1,  # Only 1 hand
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5,
+            model_complexity=0  # Lightest model (0 instead of 1)
+        )
+    
+    return _hands, _mp_hands, _mp_drawing, _mp_drawing_styles
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -55,9 +63,13 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
+        # Lazy load resources
+        model = get_model()
+        hands, mp_hands, mp_drawing, mp_drawing_styles = get_mediapipe()
+        
         # Get image from request
         data = request.json
-        image_data = data['image'].split(',')[1]  # Remove data:image/jpeg;base64,
+        image_data = data['image'].split(',')[1]
         
         # Decode base64 image
         nparr = np.frombuffer(base64.b64decode(image_data), np.uint8)
@@ -122,6 +134,10 @@ def predict():
             _, buffer = cv2.imencode('.jpg', annotated_frame)
             annotated_image = base64.b64encode(buffer).decode('utf-8')
             
+            # Clean up to free memory
+            del frame, frame_rgb, annotated_frame, buffer
+            gc.collect()
+            
             return jsonify({
                 'success': True,
                 'prediction': predicted_label,
@@ -131,23 +147,26 @@ def predict():
                 'annotated_image': f'data:image/jpeg;base64,{annotated_image}'
             })
         else:
+            # Clean up
+            del frame, frame_rgb
+            gc.collect()
+            
             return jsonify({
                 'success': False,
                 'message': 'No hand detected'
             })
             
     except Exception as e:
+        # Clean up on error
+        gc.collect()
         return jsonify({'error': str(e)}), 500
 
 @app.route('/health')
 def health():
-    return jsonify({'status': 'ok', 'model_loaded': True})
+    return jsonify({'status': 'ok'})
 
 if __name__ == '__main__':
     print("="*70)
     print("Sign Language Recognition Web App")
     print("="*70)
   
-
-    
-
