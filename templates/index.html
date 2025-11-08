@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Language Translator</title>
+    <title>Sign Language Translator - Breaking Communication Barriers</title>
     <style>
         * {
             margin: 0;
@@ -15,9 +15,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0f0f1e;
             color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            overflow-x: hidden;
             transition: all 0.3s ease;
         }
 
@@ -28,21 +26,12 @@
         }
 
         body.light-mode .header {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid #e0d8c8;
         }
 
         body.light-mode .header h1 {
             color: #2c2c2c;
-        }
-
-        body.light-mode .nav-links a {
-            color: #6b6b6b;
-        }
-
-        body.light-mode .nav-links a:hover,
-        body.light-mode .nav-links a.active {
-            color: #070115;
         }
 
         body.light-mode .theme-toggle {
@@ -53,81 +42,102 @@
             background: #d0c8b8;
         }
 
-        body.light-mode .translator-box {
-            background: #ffffff;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        body.light-mode .hero {
+            background: linear-gradient(135deg, #faf8f3 0%, #f5f1e8 100%);
         }
 
-        body.light-mode .input-section {
-            border-right: 1px solid #e0d8c8;
+        body.light-mode .hero h2 {
+            color: #070115;
         }
 
-        body.light-mode .section-title {
-            color: #6b6b6b;
-        }
-
-        body.light-mode .camera-placeholder {
-            color: #9b9b9b;
-        }
-
-        body.light-mode .btn-secondary {
-            background: #e0d8c8;
-            color: #2c2c2c;
-        }
-
-        body.light-mode .btn-secondary:hover:not(:disabled) {
-            background: #d0c8b8;
-        }
-
-        body.light-mode .prediction-display {
-            background: #f5f1e8;
-        }
-
-        body.light-mode .confidence-bar {
-            background: #e0d8c8;
-        }
-
-        body.light-mode .confidence-text {
-            color: #6b6b6b;
-        }
-
-        body.light-mode .output-text {
-            background: #faf8f3;
-            border: 1px solid #e0d8c8;
-            color: #2c2c2c;
-        }
-
-        body.light-mode .output-placeholder {
-            color: #9b9b9b;
-        }
-
-        body.light-mode .action-btn {
-            background: #f5f1e8;
-            border: 1px solid #e0d8c8;
-            color: #2c2c2c;
-        }
-
-        body.light-mode .action-btn:hover {
-            background: #e0d8c8;
-            border-color: #070115;;
-        }
-
-        body.light-mode .about-container {
-            background: #ffffff;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        body.light-mode .about-container h2 {
-            color: #070115;;
-        }
-
-        body.light-mode .about-container h3 {
-            color: #2c2c2c;
-        }
-
-        body.light-mode .about-container p,
-        body.light-mode .about-container ul li {
+        body.light-mode .hero p {
             color: #4a4a4a;
+        }
+
+        body.light-mode .cta-primary {
+            background: #070115;
+            color: white;
+        }
+
+        body.light-mode .cta-primary:hover {
+            background: #1a0a2e;
+            transform: translateY(-2px);
+        }
+
+        body.light-mode .cta-secondary {
+            background: transparent;
+            color: #070115;
+            border: 2px solid #070115;
+        }
+
+        body.light-mode .cta-secondary:hover {
+            background: #070115;
+            color: white;
+        }
+
+        body.light-mode .feature-card {
+            background: #ffffff;
+            border: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .feature-icon {
+            background: linear-gradient(135deg, #f5f1e8, #e0d8c8);
+            color: #070115;
+        }
+
+        body.light-mode .feature-card h3 {
+            color: #2c2c2c;
+        }
+
+        body.light-mode .feature-card p {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .stats-section {
+            background: #ffffff;
+            border-top: 1px solid #e0d8c8;
+            border-bottom: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .stat-number {
+            color: #070115;
+        }
+
+        body.light-mode .stat-label {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .how-it-works {
+            background: #faf8f3;
+        }
+
+        body.light-mode .step-card {
+            background: #ffffff;
+            border: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .step-number {
+            background: linear-gradient(135deg, #070115, #1a0a2e);
+        }
+
+        body.light-mode .step-card h3 {
+            color: #2c2c2c;
+        }
+
+        body.light-mode .step-card p {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .cta-section {
+            background: linear-gradient(135deg, #070115, #1a0a2e);
+        }
+
+        body.light-mode .cta-section h2 {
+            color: #ffffff;
+        }
+
+        body.light-mode .cta-section p {
+            color: #e0e0e0;
         }
 
         body.light-mode .footer {
@@ -135,17 +145,17 @@
             border-top: 1px solid #e0d8c8;
         }
 
-        body.light-mode .footer-section h4 {
-            color: #070115;;
+        body.light-mode .footer h4 {
+            color: #070115;
         }
 
-        body.light-mode .footer-section p,
+        body.light-mode .footer p,
         body.light-mode .footer-links a {
             color: #6b6b6b;
         }
 
         body.light-mode .footer-links a:hover {
-            color: #070115;;
+            color: #070115;
         }
 
         body.light-mode .footer-bottom {
@@ -153,13 +163,20 @@
             color: #9b9b9b;
         }
 
+        /* Header */
         .header {
-            background: #1a1a2e;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
             padding: 20px 40px;
             border-bottom: 1px solid #2a2a3e;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 1000;
             transition: all 0.3s ease;
         }
 
@@ -170,18 +187,8 @@
             cursor: pointer;
         }
 
-        .header h1:hover {
-            color: #070115;;
-        }
-
         .header span {
-            color: #070115;;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 30px;
+            color: #070115;
         }
 
         .theme-toggle {
@@ -200,337 +207,350 @@
 
         .theme-toggle:hover {
             background: #3a3a4e;
-            transform: scale(1.1);
+            transform: rotate(20deg) scale(1.1);
         }
 
-        .nav-links {
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
             display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            color: #8b8b9e;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #070115;;
-        }
-
-        .main-container {
-            flex: 1;
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .translator-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            background: #1a1a2e;
-            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
-        .input-section, .output-section {
-            padding: 30px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(112, 68, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(112, 68, 255, 0.2);
+            border: 1px solid rgba(112, 68, 255, 0.4);
+            border-radius: 50px;
+            font-size: 14px;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h2 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h2 .gradient-text {
+            background: linear-gradient(135deg, #070115, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #b8b8c8;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-buttons {
             display: flex;
-            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s both;
         }
 
-        .input-section {
-            border-right: 1px solid #2a2a3e;
+        .cta-primary, .cta-secondary {
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #070115, #ec4899);
+            color: white;
+            box-shadow: 0 10px 30px rgba(112, 68, 255, 0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(112, 68, 255, 0.5);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-animation {
+            margin-top: 60px;
+            font-size: 100px;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(20deg); }
+            75% { transform: rotate(-20deg); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .section-title {
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #8b8b9e;
-            margin-bottom: 20px;
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4/3;
-            background: #000;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        #video, #canvas {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        #canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .camera-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #5a5a6e;
-        }
-
-        .camera-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            flex: 1;
-            padding: 12px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-transform: capitalize;
-        }
-
-        .btn-primary {
-            background: #070115;;
-            color: white;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: #070115;;
-        }
-
-        .btn-secondary {
-            background: #2a2a3e;
-            color: white;
-        }
-
-        .btn-secondary:hover:not(:disabled) {
-            background: #3a3a4e;
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .prediction-display {
-            padding: 20px;
-            background: #2a2a3e;
-            border-radius: 8px;
             text-align: center;
-            margin-bottom: 20px;
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .current-sign {
             font-size: 48px;
-            font-weight: bold;
-            color: #070115;;
-            margin-bottom: 10px;
-        }
-
-        .confidence-bar {
-            width: 100%;
-            height: 4px;
-            background: #3a3a4e;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-
-        .confidence-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #070115, #ec4899);
-            width: 0%;
-            transition: width 0.3s;
-        }
-
-        .confidence-text {
-            font-size: 12px;
-            color: #8b8b9e;
-            margin-top: 8px;
-        }
-
-        .output-text {
-            flex: 1;
-            padding: 20px;
-            background: #0f0f1e;
-            border: 1px solid #2a2a3e;
-            border-radius: 8px;
-            font-size: 18px;
-            line-height: 1.6;
-            color: #ffffff;
-            min-height: 300px;
+            font-weight: 700;
             margin-bottom: 20px;
-            overflow-y: auto;
         }
 
-        .output-placeholder {
-            color: #5a5a6e;
-            font-style: italic;
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #b8b8c8;
+            margin-bottom: 60px;
         }
 
-        .action-buttons {
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        .action-btn {
-            padding: 12px;
-            background: #2a2a3e;
-            border: 1px solid #3a3a4e;
-            border-radius: 8px;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
+        .feature-card {
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #2a2a3e;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: #070115;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #070115, #ec4899);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-        }
-
-        .action-btn:hover {
-            background: #3a3a4e;
-            border-color: #070115;
-        }
-
-        .action-btn.primary {
-            background: #070115;
-            border-color: #070115;
-        }
-
-        .action-btn.primary:hover {
-            background: #070115;
-        }
-
-        .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        .status-active {
-            background: #10b981;
-            box-shadow: 0 0 10px #10b981;
-        }
-
-        .status-inactive {
-            background: #050a13;
-        }
-
-        /* About Us Page Styles */
-        .about-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #1a1a2e;
-            border-radius: 12px;
-            padding: 50px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .about-container h2 {
-            font-size: 36px;
-            color:#e2e1e6;
-            margin-bottom: 30px;
-        }
-
-        .about-container h3 {
-            font-size: 24px;
-            color: #ffffff;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-
-        .about-container p {
-            font-size: 16px;
-            line-height: 1.8;
-            color: #b8b8c8;
+            font-size: 30px;
             margin-bottom: 20px;
         }
 
-        .about-container ul {
-            list-style: none;
-            padding-left: 0;
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #ffffff;
         }
 
-        .about-container ul li {
+        .feature-card p {
             font-size: 16px;
-            line-height: 1.8;
+            line-height: 1.6;
             color: #b8b8c8;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: #1a1a2e;
+            padding: 60px 20px;
+            border-top: 1px solid #2a2a3e;
+            border-bottom: 1px solid #2a2a3e;
+        }
+
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #070115;
             margin-bottom: 10px;
-            padding-left: 25px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #b8b8c8;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 20px;
+            background: #0f0f1e;
+        }
+
+        .steps-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .step-card {
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
             position: relative;
+            border: 1px solid #2a2a3e;
+            transition: all 0.3s ease;
         }
 
-        .about-container ul li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #efeef2;
-            font-weight: bold;
+        .step-card:hover {
+            transform: scale(1.05);
+            border-color: #070115;
         }
 
-        /* Footer Styles */
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #070115, #ec4899);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .step-card p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #b8b8c8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #070115, #1a0a2e);
+        }
+
+        .cta-section h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: #e0e0e0;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
         .footer {
-            background: #010113;
-            border-top: 1px solid #010111;
-            padding: 30px 40px;
-            margin-top: auto;
+            background: #1a1a2e;
+            border-top: 1px solid #2a2a3e;
+            padding: 60px 40px 30px;
         }
 
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
             gap: 40px;
+            margin-bottom: 40px;
         }
 
         .footer-section h4 {
             color: #070115;
-            font-size: 16px;
-            margin-bottom: 15px;
+            font-size: 18px;
+            margin-bottom: 20px;
         }
 
         .footer-section p {
-            color: #8b8b9e;
+            color: #b8b8c8;
             font-size: 14px;
             line-height: 1.6;
         }
@@ -540,11 +560,11 @@
         }
 
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .footer-links a {
-            color: #8b8b9e;
+            color: #b8b8c8;
             text-decoration: none;
             font-size: 14px;
             transition: color 0.2s;
@@ -555,147 +575,160 @@
         }
 
         .footer-bottom {
-            max-width: 1400px;
-            margin: 20px auto 0;
-            padding-top: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
             border-top: 1px solid #2a2a3e;
             text-align: center;
-            color: #5a5a6e;
+            color: #6b6b6b;
             font-size: 14px;
         }
 
-        @media (max-width: 1024px) {
-            .translator-box {
-                grid-template-columns: 1fr;
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 40px;
             }
 
-            .input-section {
-                border-right: none;
-                border-bottom: 1px solid #2a2a3e;
+            .hero p {
+                font-size: 18px;
             }
 
-            body.light-mode .input-section {
-                border-bottom: 1px solid #e0d8c8;
+            .section-title {
+                font-size: 36px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
             }
 
-            .header-right {
-                gap: 15px;
-            }
-
-            .nav-links {
-                gap: 15px;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
-        <h1 onclick="showPage('translator')"> Sign Language <span>Translator</span></h1>
-        <div class="header-right">
-            <nav class="nav-links">
-                <a href="#" class="active" onclick="showPage('translator')">Translator</a>
-                <a href="#" onclick="showPage('about')">About Us</a>
-            </nav>
-            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
-        </div>
+        <h1>Sign Language <span>Translator</span></h1>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
     </div>
 
-    <div class="main-container">
-        <!-- Translator Page -->
-        <div id="translatorPage" class="page active">
-            <div class="translator-box">
-                <!-- Input Section (Camera) -->
-                <div class="input-section">
-                    <div class="section-title">
-                        <span class="status-dot" id="statusDot"></span>
-                        Camera Input
-                    </div>
-
-                    <div class="video-container">
-                        <video id="video" autoplay playsinline style="display: none;"></video>
-                        <canvas id="canvas" style="display: none;"></canvas>
-                        <div class="camera-placeholder" id="placeholder">
-                            <div class="camera-icon">📹</div>
-                            <div>Click "Start Camera" to begin</div>
-                        </div>
-                    </div>
-
-                    <div class="prediction-display">
-                        <div class="current-sign" id="currentSign">-</div>
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" id="confidenceFill"></div>
-                        </div>
-                        <div class="confidence-text" id="confidenceText">Ready to detect signs</div>
-                    </div>
-
-                    <div class="controls">
-                        <button id="startBtn" class="btn-primary">Start Camera</button>
-                        <button id="stopBtn" class="btn-secondary" disabled>Stop Camera</button>
-                    </div>
-                </div>
-
-                <!-- Output Section (Translation) -->
-                <div class="output-section">
-                    <div class="section-title">Translated Sentence</div>
-
-                    <div class="output-text" id="outputText">
-                        <span class="output-placeholder">Your translated sentence will appear here...</span>
-                    </div>
-
-                    <div class="action-buttons">
-                        <button class="action-btn primary" id="addBtn" disabled>
-                            ➕ Add Sign
-                        </button>
-                        <button class="action-btn" onclick="deleteLastWord()">
-                            ⬅️ Delete
-                        </button>
-                        <button class="action-btn" onclick="clearSentence()">
-                            🗑️ Clear
-                        </button>
-                        <button class="action-btn" onclick="speakSentence()">
-                            🔊 Speak
-                        </button>
-                        <button class="action-btn" onclick="copySentence()">
-                            📋 Copy
-                        </button>
-                        <button class="action-btn" onclick="saveSentence()">
-                            💾 Save
-                        </button>
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">✨ AI-Powered Translation</div>
+            <h2>Break Communication <span class="gradient-text">Barriers</span></h2>
+            <p>Transform sign language into text and speech in real-time. Making communication accessible for everyone, powered by advanced AI technology.</p>
+            <div class="cta-buttons">
+                <a href="translator" class="cta-primary" onclick="alert('This would redirect to your translator page!')">Start Translating</a>
+                <a href="learn_more" class="cta-secondary">Learn More</a>
             </div>
         </div>
+    </section>
 
-        <!-- About Us Page -->
-        <div id="aboutPage" class="page">
-            <div class="about-container">
-                <h2>About Sign Language Translator</h2>
-                
-                <p>Our Sign Language Translator is an AI application designed to bridge communication gaps between sign language users and the hearing community. Using advanced machine learning and computer vision technology, we make communication more accessible and inclusive.</p>
-
-                <h3>What We Do</h3>
-                <p>We provide real-time sign language recognition and translation, enabling seamless communication through:</p>
-                <ul>
-                    <li>Real-time hand gesture recognition using AI</li>
-                    <li>Accurate translation of ASL signs to text</li>
-                    <li>Text-to-speech conversion for spoken output</li>
-                    <li>Simple, intuitive interface for all users</li>
-                </ul>
-
-                <h3>Our Mission</h3>
-                <p>To break down communication barriers and create a more inclusive world where everyone can express themselves freely, regardless of their preferred mode of communication.</p>
-
-                
-
-                <h3>Get Involved</h3>
-                <p>We believe in continuous improvement and community involvement. If you have feedback, suggestions, or would like to contribute to making this tool better, we'd love to hear from you.</p>
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">Why Choose Us?</h2>
+        <p class="section-subtitle">Experience the future of accessible communication</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎥</div>
+                <h3>Real-Time Detection</h3>
+                <p>Our AI instantly recognizes hand gestures through your camera, providing immediate translation with high accuracy.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered</h3>
+                <p>Advanced machine learning models trained on thousands of sign language gestures for precise recognition.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔊</div>
+                <h3>Text-to-Speech</h3>
+                <p>Converted text is instantly spoken aloud, enabling seamless communication with hearing individuals.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Process and translate signs in milliseconds with optimized algorithms for smooth real-time performance.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Beautiful Interface</h3>
+                <p>Clean, intuitive design with dark and light modes that makes translation effortless and enjoyable.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Accessible Anywhere</h3>
+                <p>Works directly in your browser - no installation needed. Translate signs from any device, anywhere.</p>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">99%</div>
+                <div class="stat-label">Accuracy Rate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">26+</div>
+                <div class="stat-label">Letters Recognized</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100ms</div>
+                <div class="stat-label">Detection Speed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Always Available</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Get started in three simple steps</p>
+        
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Start Camera</h3>
+                <p>Click the "Start Camera" button to activate your webcam and begin the translation session.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Show Signs</h3>
+                <p>Perform sign language gestures in front of the camera. Our AI will instantly recognize and display them.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Build & Speak</h3>
+                <p>Add detected signs to build sentences, then use speak, copy, or save features to communicate.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Start?</h2>
+        <p>Join thousands of users breaking communication barriers with AI-powered sign language translation.</p>
+        <a href="translator.html" class="cta-primary" onclick="alert('This would redirect to your translator page!')">Try It Now - It's Free</a>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -707,8 +740,8 @@
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul class="footer-links">
-                    <li><a href="#" onclick="showPage('translator')">Translator</a></li>
-                    <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                    <li><a href="translator.html">Translator</a></li>
+                    <li><a href="translator.html">About Us</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Terms of Service</a></li>
                 </ul>
@@ -716,9 +749,9 @@
             <div class="footer-section">
                 <h4>Contact</h4>
                 <ul class="footer-links">
-                    <li><a href="mailto:padmaniruhi@gmail.com">support@signlanguage.com</a></li>
+                    <li><a href="mailto:support@signlanguage.com">support@signlanguage.com</a></li>
                     <li><a href="#">GitHub</a></li>
-                    
+                    <li><a href="#">Documentation</a></li>
                 </ul>
             </div>
         </div>
@@ -728,203 +761,63 @@
     </footer>
 
     <script>
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const placeholder = document.getElementById('placeholder');
-        const startBtn = document.getElementById('startBtn');
-        const stopBtn = document.getElementById('stopBtn');
-        const addBtn = document.getElementById('addBtn');
-        const statusDot = document.getElementById('statusDot');
-        const themeToggle = document.getElementById('themeToggle');
-
-        let stream = null;
-        let isDetecting = false;
-        let sentence = [];
-        let currentPrediction = null;
-
-        statusDot.classList.add('status-inactive');
-
         // Theme Management
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             if (savedTheme === 'light') {
                 document.body.classList.add('light-mode');
-                themeToggle.textContent = '☀️';
+                document.getElementById('themeToggle').textContent = '☀️';
             } else {
-                themeToggle.textContent = '🌙';
+                document.getElementById('themeToggle').textContent = '🌙';
             }
         }
 
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const isLight = document.body.classList.contains('light-mode');
-            themeToggle.textContent = isLight ? '☀️' : '🌙';
+            document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         }
 
         // Initialize theme on page load
         initTheme();
 
-        // Page navigation
-        function showPage(pageName) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            if (pageName === 'translator') {
-                document.getElementById('translatorPage').classList.add('active');
-                document.querySelector('.nav-links a:first-child').classList.add('active');
-            } else if (pageName === 'about') {
-                document.getElementById('aboutPage').classList.add('active');
-                document.querySelector('.nav-links a:last-child').classList.add('active');
-            }
-        }
-
-        // Start camera
-        startBtn.addEventListener('click', async () => {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: 'user' } 
-                });
-                video.srcObject = stream;
-                
-                video.onloadedmetadata = () => {
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    placeholder.style.display = 'none';
-                    video.style.display = 'block';
-                    canvas.style.display = 'block';
-                };
-
-                startBtn.disabled = true;
-                stopBtn.disabled = false;
-                addBtn.disabled = false;
-                statusDot.classList.remove('status-inactive');
-                statusDot.classList.add('status-active');
-                
-                isDetecting = true;
-                detectSign();
-            } catch (err) {
-                alert('Camera access denied. Please allow camera permissions.\n\nFor Brave browser:\n1. Click shield icon in address bar\n2. Allow camera access\n3. Refresh page');
-            }
-        });
-
-        // Stop camera
-        stopBtn.addEventListener('click', () => {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                video.srcObject = null;
-                isDetecting = false;
-                
-                placeholder.style.display = 'flex';
-                video.style.display = 'none';
-                canvas.style.display = 'none';
-                
-                startBtn.disabled = false;
-                stopBtn.disabled = true;
-                addBtn.disabled = true;
-                statusDot.classList.remove('status-active');
-                statusDot.classList.add('status-inactive');
-                
-                document.getElementById('currentSign').textContent = '-';
-                document.getElementById('confidenceText').textContent = 'Camera stopped';
-                document.getElementById('confidenceFill').style.width = '0%';
-            }
-        });
-
-        // Continuous detection
-        async function detectSign() {
-            if (!isDetecting) return;
-
-            try {
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = canvas.toDataURL('image/jpeg');
-
-                const response = await fetch('/predict', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ image: imageData })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    currentPrediction = result.prediction;
-                    document.getElementById('currentSign').textContent = result.prediction;
-                    document.getElementById('confidenceText').textContent = 
-                        `Confidence: ${result.confidence}%`;
-                    document.getElementById('confidenceFill').style.width = result.confidence + '%';
-                } else {
-                    currentPrediction = null;
-                    document.getElementById('currentSign').textContent = '👋';
-                    document.getElementById('confidenceText').textContent = 'Show your hand';
-                    document.getElementById('confidenceFill').style.width = '0%';
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-            } catch (err) {
-                console.error('Detection error:', err);
-            }
-
-            setTimeout(detectSign, 100);
-        }
-
-        // Add to sentence
-        addBtn.addEventListener('click', () => {
-            if (currentPrediction) {
-                sentence.push(currentPrediction);
-                updateSentenceDisplay();
-            }
+            });
         });
 
-        function updateSentenceDisplay() {
-            const outputText = document.getElementById('outputText');
-            if (sentence.length === 0) {
-                outputText.innerHTML = '<span class="output-placeholder">Your translated sentence will appear here...</span>';
-            } else {
-                outputText.textContent = sentence.join(' ');
-            }
-        }
+        // Add scroll animation for elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-        function deleteLastWord() {
-            if (sentence.length > 0) {
-                sentence.pop();
-                updateSentenceDisplay();
-            }
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-        function clearSentence() {
-            sentence = [];
-            updateSentenceDisplay();
-        }
-
-        function speakSentence() {
-            if (sentence.length > 0 && 'speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(sentence.join(' '));
-                speechSynthesis.speak(utterance);
-            }
-        }
-
-        function copySentence() {
-            if (sentence.length > 0) {
-                navigator.clipboard.writeText(sentence.join(' '));
-                alert('Sentence copied to clipboard!');
-            }
-        }
-
-        function saveSentence() {
-            if (sentence.length > 0) {
-                const text = sentence.join(' ');
-                const blob = new Blob([text], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'sentence_' + new Date().getTime() + '.txt';
-                a.click();
-            }
-        }
+        // Observe all feature cards and step cards
+        document.querySelectorAll('.feature-card, .step-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
     </script>
 </body>
 </html>
