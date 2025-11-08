@@ -45,12 +45,27 @@ labels_dict = {
     10: 'E', 11: 'F', 12: 'G', 13: 'H', 14: 'I',
     15: 'K', 16: 'L', 17: 'M', 18: 'N', 19: 'O',
     20: 'P', 21: 'Q', 22: 'R', 23: 'S', 24: 'T',
-    25: 'U', 26: 'V', 27: 'W', 28: 'X', 29: 'Y'
+    25: 'U', 26: 'V', 27: 'W', 28: 'X', 29: 'Y',
+    30: 'how are you', 31: 'im fine', 32: 'im good',
+    33: 'sorry', 34: 'see you later', 35: 'wait',
+    36: 'go', 37: 'come', 38: 'help', 39: 'call me',
+    40: 'hungry', 41: 'whats your name', 42:'good job', 
+    43:'good morning', 44:'good night', 45:'good afternoon', 
+    46:'you', 47:'nice to meet'
 }
 
+# Routes for HTML pages
 @app.route('/')
-def index():
+def landing():
     return render_template('index.html')
+
+@app.route('/translator')
+def translator():
+    return render_template('translator.html')
+
+@app.route('/learn_more')
+def learn_more():
+    return render_template('learn_more.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -147,7 +162,7 @@ if __name__ == '__main__':
     print("="*70)
     print("Sign Language Recognition Web App")
     print("="*70)
-    print("Server starting at http://localhost:5000")
+    print("Server starting at http://localhost:10000")
     print("Press Ctrl+C to stop")
     print("="*70)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=10000)

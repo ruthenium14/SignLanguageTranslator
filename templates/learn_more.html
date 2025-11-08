@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn More - Sign Language Translator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f1e;
+            color: #ffffff;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            background: #f5f1e8;
+            color: #2c2c2c;
+        }
+
+        body.light-mode .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .header h1 {
+            color: #2c2c2c;
+        }
+
+        body.light-mode .nav-links a {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .nav-links a:hover,
+        body.light-mode .nav-links a.active {
+            color: #070115;
+        }
+
+        body.light-mode .theme-toggle {
+            background: #e0d8c8;
+        }
+
+        body.light-mode .theme-toggle:hover {
+            background: #d0c8b8;
+        }
+
+        body.light-mode .hero-section {
+            background: linear-gradient(135deg, #faf8f3 0%, #f5f1e8 100%);
+        }
+
+        body.light-mode .hero-section h1 {
+            color: #070115;
+        }
+
+        body.light-mode .hero-section p {
+            color: #4a4a4a;
+        }
+
+        body.light-mode .content-section {
+            background: #ffffff;
+            border: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .content-section h2 {
+            color: #070115;
+        }
+
+        body.light-mode .content-section h3 {
+            color: #2c2c2c;
+        }
+
+        body.light-mode .content-section p,
+        body.light-mode .content-section li {
+            color: #4a4a4a;
+        }
+
+        body.light-mode .info-card {
+            background: #faf8f3;
+            border: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .info-card h3 {
+            color: #070115;
+        }
+
+        body.light-mode .info-card p {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .cta-box {
+            background: linear-gradient(135deg, #070115, #1a0a2e);
+        }
+
+        body.light-mode .btn-primary {
+            background: #070115;
+        }
+
+        body.light-mode .btn-primary:hover {
+            background: #1a0a2e;
+        }
+
+        body.light-mode .footer {
+            background: #ffffff;
+            border-top: 1px solid #e0d8c8;
+        }
+
+        body.light-mode .footer-section h4 {
+            color: #070115;
+        }
+
+        body.light-mode .footer-section p,
+        body.light-mode .footer-links a {
+            color: #6b6b6b;
+        }
+
+        body.light-mode .footer-links a:hover {
+            color: #070115;
+        }
+
+        body.light-mode .footer-bottom {
+            border-top: 1px solid #e0d8c8;
+            color: #9b9b9b;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
+            border-bottom: 1px solid #2a2a3e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .header h1:hover {
+            color: #070115;
+        }
+
+        .header span {
+            color: #070115;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #8b8b9e;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #070115;
+        }
+
+        .theme-toggle {
+            background: #2a2a3e;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: #3a3a4e;
+            transform: rotate(20deg) scale(1.1);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 140px 20px 80px;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+        }
+
+        .hero-section h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #070115, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section p {
+            font-size: 20px;
+            color: #b8b8c8;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Content Section */
+        .content-section {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 40px;
+            border: 1px solid #2a2a3e;
+        }
+
+        .content-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #070115;
+        }
+
+        .content-section h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .content-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #b8b8c8;
+            margin-bottom: 20px;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        .content-section li {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #b8b8c8;
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .content-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #070115;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Info Cards Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .info-card {
+            background: #2a2a3e;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #3a3a4e;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: #070115;
+        }
+
+        .info-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #070115;
+        }
+
+        .info-card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #b8b8c8;
+        }
+
+        /* Video Demo Section */
+        .video-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #2a2a3e, #1a1a2e);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            border: 2px solid #3a3a4e;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: linear-gradient(135deg, #070115, #1a0a2e);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .cta-box h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .cta-box p {
+            font-size: 18px;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #070115, #ec4899);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(112, 68, 255, 0.5);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            border-top: 1px solid #2a2a3e;
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            color: #070115;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p {
+            color: #b8b8c8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #b8b8c8;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #070115;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid #2a2a3e;
+            text-align: center;
+            color: #6b6b6b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 36px;
+            }
+
+            .content-section {
+                padding: 30px 20px;
+            }
+
+            .content-section h2 {
+                font-size: 28px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1 onclick="window.location.href='index.html'">Sign Language <span>Translator</span></h1>
+        <div class="header-right">
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="translator.">Translator</a>
+                <a href="learn-more." class="active">Learn More</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>Learn More About Our Technology</h1>
+        <p>Discover how AI-powered sign language translation is making communication accessible for everyone</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- What is Sign Language Translation -->
+        <div class="content-section">
+            <h2>What is Sign Language Translation?</h2>
+            <p>Sign language translation uses artificial intelligence and computer vision to recognize hand gestures and convert them into text and speech in real-time. Our technology bridges the communication gap between sign language users and the hearing community.</p>
+            
+            <p>Traditional communication methods often create barriers for the deaf and hard-of-hearing community. Our AI-powered translator removes these barriers, enabling seamless, instant communication without the need for human interpreters.</p>
+
+            <!--<div class="video-section">
+                <div class="video-placeholder">🎥</div>
+            </div>
+        </div>
+
+        <!-- How Our Technology Works -->
+        <div class="content-section">
+            <h2>How Our Technology Works</h2>
+            
+            <h3>1. Computer Vision</h3>
+            <p>Our system uses advanced computer vision algorithms to track hand movements, positions, and gestures through your device's camera. Every frame is analyzed in real-time to identify sign language patterns.</p>
+
+            <h3>2. Machine Learning Recognition</h3>
+            <p>Deep learning models trained on thousands of sign language gestures recognize and classify each sign with high accuracy. Our AI has been trained to understand:</p>
+            <ul>
+                <li>All 26 letters of the American Sign Language (ASL) alphabet</li>
+                <li>Hand shapes and orientations</li>
+                <li>Movement patterns and speeds</li>
+                <li>Context-aware gesture recognition</li>
+            </ul>
+
+            <h3>3. Real-Time Processing</h3>
+            <p>Detected signs are instantly converted into text, displayed on screen, and can be spoken aloud using text-to-speech technology. The entire process happens in under 100 milliseconds.</p>
+
+            <h3>4. Sentence Building</h3>
+            <p>Users can build complete sentences by adding detected signs one by one, with options to add spaces, delete mistakes, and save or share their messages.</p>
+        </div>
+
+        <!-- Technology Features -->
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>🎯 High Accuracy</h3>
+                <p>Our AI achieves 99% accuracy in sign recognition through continuous learning and optimization.</p>
+            </div>
+            <div class="info-card">
+                <h3>⚡ Lightning Fast</h3>
+                <p>Process gestures in under 100ms for seamless real-time translation without delays.</p>
+            </div>
+            <div class="info-card">
+                <h3>🔒 Privacy First</h3>
+                <p>All processing happens locally in your browser. Your video never leaves your device.</p>
+            </div>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="content-section">
+            <h2>Benefits of Our Translator</h2>
+            
+            <h3>For Sign Language Users</h3>
+            <ul>
+                <li>Communicate instantly with anyone, anywhere</li>
+                <li>No need to wait for human interpreters</li>
+                <li>Express yourself freely and naturally</li>
+                <li>Build confidence in daily interactions</li>
+            </ul>
+
+            <h3>For Educators and Students</h3>
+            <ul>
+                <li>Learn sign language with instant feedback</li>
+                <li>Practice at your own pace</li>
+                <li>Verify correct hand shapes and gestures</li>
+                <li>Create an inclusive classroom environment</li>
+            </ul>
+
+            <h3>For Businesses and Organizations</h3>
+            <ul>
+                <li>Provide accessible customer service</li>
+                <li>Enable inclusive workplace communication</li>
+                <li>Reduce dependency on interpreters</li>
+                <li>Demonstrate commitment to accessibility</li>
+            </ul>
+        </div>
+
+        <!-- Technical Specs -->
+        <div class="content-section">
+            <h2>Technical Specifications</h2>
+            <p>Our translator is built with cutting-edge technology to ensure the best user experience:</p>
+            
+            <h3>System Requirements</h3>
+            <ul>
+                <li>Modern web browser (Chrome, Firefox, Safari, Edge)</li>
+                <li>Webcam or device camera</li>
+                <li>Stable internet connection</li>
+                <li>No installation or downloads required</li>
+            </ul>
+
+            <h3>Supported Features</h3>
+            <ul>
+                <li>26 ASL alphabet letters recognition</li>
+                <li>Real-time video processing</li>
+                <li>Text-to-speech output</li>
+                <li>Sentence building and editing</li>
+                <li>Copy, save, and share functionality</li>
+                <li>Dark and light mode themes</li>
+            </ul>
+        </div>
+
+        <!-- CTA Box -->
+        <div class="cta-box">
+            <h2>Ready to Try It?</h2>
+            <p>Experience the future of accessible communication. Start translating sign language in seconds.</p>
+            <a href="translator.html" class="btn-primary">Start Translating Now</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Sign Language Translator</h4>
+                <p>Breaking communication barriers through AI sign language recognition. Making the world more accessible, one sign at a time.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="translator">Translator</a></li>
+                    <li><a href="learn-more">Learn More</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:padmaniruhi@gmail.com.com">support@signlanguage.com</a></li>
+                    <li><a href="https://github.com/ruthenium14/SignLanguageTranslator">GitHub</a></li>
+                    <li><a href="https://github.com/ruthenium14/SignLanguageTranslator">Documentation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 Sign Language Translator. All rights reserved. Built with ❤️ for accessibility.
+        </div>
+    </footer>
+
+    <script>
+        // Theme Management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').textContent = '☀️';
+            } else {
+                document.getElementById('themeToggle').textContent = '🌙';
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Initialize theme on page load
+        initTheme();
+    </script>
+</body>
+</html>

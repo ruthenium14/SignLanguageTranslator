@@ -44,12 +44,18 @@ hands = mp_hands.Hands(
 
 # Dynamic labels dictionary
 labels_dict = {
-    0: 'Hello', 1: 'Iloveyou', 2: 'Yes', 3: 'No', 4: 'Please',
+     0: 'Hello', 1: 'Iloveyou', 2: 'Yes', 3: 'No', 4: 'Please',
     5: 'Thanks', 6: 'A', 7: 'B', 8: 'C', 9: 'D',
     10: 'E', 11: 'F', 12: 'G', 13: 'H', 14: 'I',
     15: 'K', 16: 'L', 17: 'M', 18: 'N', 19: 'O',
     20: 'P', 21: 'Q', 22: 'R', 23: 'S', 24: 'T',
-    25: 'U', 26: 'V', 27: 'W', 28: 'X', 29:'Y'
+    25: 'U', 26: 'V', 27: 'W', 28: 'X', 29: 'Y',
+    30: 'how are you', 31: 'im fine', 32: 'im good',
+    33: 'sorry', 34: 'see you later', 35: 'wait',
+    36: 'go', 37: 'come', 38: 'help', 39: 'call me',
+    40: 'hungry', 41: 'whats your name', 42:'good job', 43:'good morning', 44:'good night', 45:'good afternoon', 46:'you', 47:'nice to meet'
+
+    
     }
 
 # Start video capture
